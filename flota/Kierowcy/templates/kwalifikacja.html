@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h4>Świadectwo kwalifikacji kierowcy</h4>
+    Kierowca: {{ unit.imie }}&nbsp;{{ unit.nazwisko }}<br>
+    <form action="" method="post">
+    {% csrf_token %}
+        {{ form }}
+    <input type="submit" value="Zapisz">
+    </form>
+
+{% endblock %}
+
+
