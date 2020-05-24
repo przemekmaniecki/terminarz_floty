@@ -130,19 +130,14 @@ class AddBtView(LoginRequiredMixin, View):
     def post(self,request, id):
         unit = PojazdyModel.objects.get(id=id)
         form = BT_Form(request.POST)
+        object, created = BT.objects.get_or_create(pojazd=unit)
         if form.is_valid():
-            if BT.objects.filter(pojazd=unit).exists():
-                record = BT.objects.update(nazwa="Przegląd techniczy pojazdu",
-                                           instytucja=form.cleaned_data['instytucja'],
-                                           wymagane=form.cleaned_data['wymagane'],
-                                           data_konc=form.cleaned_data['data_konc'],
-                                           pojazd=unit)
-                return redirect(f'/details/{id}')
-            else:
-                f = BT(**form.cleaned_data)
-                f.nazwa = "Przegląd techniczy pojazdu"
-                f.pojazd = unit
-                f.save()
+                object.nazwa="Przegląd techniczy pojazdu",
+                object.instytucja=form.cleaned_data['instytucja'],
+                object.wymagane=form.cleaned_data['wymagane'],
+                object.data_konc=form.cleaned_data['data_konc'],
+                object.pojazd=unit
+                object.save()
                 return redirect(f'/details/{id}')
         else:
             return redirect('wrong/')
@@ -160,20 +155,15 @@ class AddTachoView(LoginRequiredMixin, View):
     def post(self,request, id):
         unit = PojazdyModel.objects.get(id=id)
         form = TACHO_Form(request.POST)
+        object, created = tacho.objects.get_or_create(pojazd=unit)
         if form.is_valid():
-            if tacho.objects.filter(pojazd=unit).exists():
-                record = tacho.objects.update(nazwa="Przegląd urządzenia rejestrującego",
-                                           instytucja=form.cleaned_data['instytucja'],
-                                           wymagane=form.cleaned_data['wymagane'],
-                                           data_konc=form.cleaned_data['data_konc'],
-                                           pojazd=unit)
+                object.nazwa="Przegląd urządzenia rejestrującego",
+                object.instytucja=form.cleaned_data['instytucja'],
+                object.wymagane=form.cleaned_data['wymagane'],
+                object.data_konc=form.cleaned_data['data_konc'],
+                object.pojazd=unit
+                object.save()
                 return redirect(f'/details/{id}')
-            else:
-                f = tacho(**form.cleaned_data)
-                f.nazwa = "Przegląd urządzenia rejestrującego",
-                f.pojazd = unit
-                f.save()
-            return redirect(f'/details/{id}')
         else:
             return redirect('wrong/')
 class AddAdrVehView(LoginRequiredMixin, View):
@@ -189,19 +179,14 @@ class AddAdrVehView(LoginRequiredMixin, View):
     def post(self,request, id):
         unit = PojazdyModel.objects.get(id=id)
         form = ADR_Form(request.POST)
+        object, created = UKO.objects.get_or_create(pojazd=unit)
         if form.is_valid():
-            if ADR.objects.filter(pojazd=unit).exists():
-                record = ADR.objects.update(nazwa="Dopuszczenie do przewodu ADR",
-                                           instytucja=form.cleaned_data['instytucja'],
-                                           wymagane=form.cleaned_data['wymagane'],
-                                           data_konc=form.cleaned_data['data_konc'],
-                                           pojazd=unit)
-                return redirect(f'/details/{id}')
-            else:
-                f = ADR(**form.cleaned_data)
-                f.nazwa = "Dopuszczenie do przewodu ADR"
-                f.pojazd = unit
-                f.save()
+            object.nazwa="Dopuszczenie do przewodu ADR",
+            object.instytucja=form.cleaned_data['instytucja'],
+            object.wymagane=form.cleaned_data['wymagane'],
+            object.data_konc=form.cleaned_data['data_konc'],
+            object.pojazd=unit
+            object.save()
             return redirect(f'/details/{id}')
         else:
             return redirect('wrong/')
@@ -218,20 +203,15 @@ class AddUdtView(LoginRequiredMixin, View):
     def post(self,request, id):
         unit = PojazdyModel.objects.get(id=id)
         form = UDT_Form(request.POST)
+        object, created = TDT.objects.get_or_create(pojazd=unit)
         if form.is_valid():
-            if UDT.objects.filter(pojazd=unit).exists():
-                record = UDT.objects.update(nazwa="Badanie dopuszczenia windy hydraulicznej lub HDS",
-                                           instytucja=form.cleaned_data['instytucja'],
-                                           wymagane=form.cleaned_data['wymagane'],
-                                           data_konc=form.cleaned_data['data_konc'],
-                                           pojazd=unit)
-                return redirect(f'/details/{id}')
-            else:
-                f = UDT(**form.cleaned_data)
-                f.nazwa = "Badanie dopuszczenia windy hydraulicznej lub HDS"
-                f.pojazd = unit
-                f.save()
-                return redirect(f'/details/{id}')
+            object.nazwa="Badanie dopuszczenia windy hydraulicznej lub HDS",
+            object.instytucja=form.cleaned_data['instytucja'],
+            object.wymagane=form.cleaned_data['wymagane'],
+            object.data_konc=form.cleaned_data['data_konc'],
+            object.pojazd=unit
+            object.save()
+            return redirect(f'/details/{id}')
         else:
             return redirect('wrong/')
 
@@ -248,20 +228,16 @@ class AddTdtView(LoginRequiredMixin, View):
     def post(self,request, id):
         unit = PojazdyModel.objects.get(id=id)
         form = TDT_Form(request.POST)
+        object, created = TDT.objects.get_or_create(pojazd=unit)
+        form = UK_Form(request.POST)
         if form.is_valid():
-            if TDT.objects.filter(pojazd=unit).exists():
-                record = TDT.objects.update(nazwa="Badania elementów podlegających pod TDT",
-                                           instytucja=form.cleaned_data['instytucja'],
-                                           wymagane=form.cleaned_data['wymagane'],
-                                           data_konc=form.cleaned_data['data_konc'],
-                                           pojazd=unit)
-                return redirect(f'/details/{id}')
-            else:
-                f = TDT(**form.cleaned_data)
-                f.nazwa = "Badania elementów podlegających pod TDT"
-                f.pojazd = unit
-                f.save()
-                return redirect(f'/details/{id}')
+            object.nazwa="Badania elementów podlegających pod TDT",
+            object.instytucja=form.cleaned_data['instytucja'],
+            object.wymagane=form.cleaned_data['wymagane'],
+            object.data_konc=form.cleaned_data['data_konc'],
+            object.pojazd=unit
+            object.save()
+            return redirect(f'/details/{id}')
         else:
             return redirect('wrong/')
 class AddEuroView(LoginRequiredMixin, View):
@@ -302,23 +278,18 @@ class AddUkView(LoginRequiredMixin, View):
         return render(request, 'adduk.html', ctx)
    def post(self,request, id):
        unit = PojazdyModel.objects.get(id=id)
+       object, created = UKO.objects.get_or_create(pojazd=unit)
        form = UK_Form(request.POST)
        if form.is_valid():
-           if UKO.objects.filter(pojazd=unit).exists():
-               record = UKO.objects.update(
-                                           instytucja=form.cleaned_data['instytucja'],
-                                           data_konc=form.cleaned_data['data_konc'],
-                                           OC=form.cleaned_data['OC'],
-                                           AC=form.cleaned_data['AC'],
-                                           NNW=form.cleaned_data['NNW'],
-                                           nr_polisy=form.cleaned_data['nr_polisy'],
-                                           pojazd=unit)
-               return redirect(f'/details/{id}')
-           else:
-               f = UKO(**form.cleaned_data)
-               f.pojazd = unit
-               f.save()
-               return redirect(f'/details/{id}')
+              object.instytucja=form.cleaned_data['instytucja']
+              object.data_konc=form.cleaned_data['data_konc'],
+              object.OC=form.cleaned_data['OC'],
+              object.AC=form.cleaned_data['AC'],
+              object.NNW=form.cleaned_data['NNW'],
+              object.nr_polisy=form.cleaned_data['nr_polisy'],
+              object.pojazd=unit
+              object.save()
+              return redirect(f'/details/{id}')
        else:
            return redirect('wrong/')
 class AddFrcView(LoginRequiredMixin, View):
@@ -334,18 +305,14 @@ class AddFrcView(LoginRequiredMixin, View):
     def post(self,request, id):
         unit = PojazdyModel.objects.get(id=id)
         form = FRC_Form(request.POST)
+        object, created = FRC.objects.get_or_create(pojazd=unit)
         if form.is_valid():
-            if FRC.objects.filter(pojazd=unit).exists():
-                record = FRC.objects.update(nazwa="Certyfikat FRC",
-                                           instytucja=form.cleaned_data['instytucja'],
-                                           wymagane=form.cleaned_data['wymagane'],
-                                           data_konc=form.cleaned_data['data_konc'],
-                                           pojazd=unit)
-            else:
-                f = FRC(**form.cleaned_data)
-                f.nazwa = "Certyfikat FRC"
-                f.pojazd = unit
-                f.save()
+            object.nazwa="Certyfikat FRC",
+            object.instytucja=form.cleaned_data['instytucja'],
+            object.wymagane=form.cleaned_data['wymagane'],
+            object.data_konc=form.cleaned_data['data_konc'],
+            object.pojazd=unit
+            object.save()
             return redirect(f'/details/{id}')
         else:
             return redirect('wrong/')
